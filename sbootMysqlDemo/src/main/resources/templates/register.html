@@ -1,0 +1,51 @@
+
+
+<html >
+<head>
+<title>register</title>
+
+
+    <script type="text/javascript">    
+   
+    
+      function getInfo()
+      {
+    	  console.log("hello");
+          var xhr = new XMLHttpRequest();
+        
+          xhr.open("GET", "http://localhost:8080/adduser");
+          
+              
+    	  console.log("hello2");
+    	  var user = {  
+    		        name : "qwe", 
+    		        age : 12,
+    		    };
+     
+          //document.getElementById("name").value = user[0];
+          //document.getElementById("age").value = user.[1];
+          
+          console.log("hello3");
+          xhr.send(JSON.stringify(user));
+      }
+     
+    </script>
+
+</head>
+<body>
+ 
+
+	
+
+<form action="/adduser" method="get">
+	age: <input type="text" name="age" />
+	name :<input type="text" name="name" />
+
+<input type="Submit" value="Submit"  />
+</form> 
+ 
+ 
+
+
+</body>
+</html>

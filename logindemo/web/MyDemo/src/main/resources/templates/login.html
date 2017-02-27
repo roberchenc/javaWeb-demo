@@ -1,0 +1,106 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+
+<script src="jquery-3.1.1.js"></script>
+<script src="jquery.js"></script>
+
+</head>
+<body>
+<div style="width:100%;text-align:center">
+<h1>login</h1>
+
+<form id = "login" name = "login">
+	登录账号：<input type="text" name ="userNumber" /><br /><br />
+	登录密码：<input type="password" name ="passWord" /><br /><br />
+	<input type="submit" value="登录"/> &nbsp;&nbsp;
+	<input type="reset" value="重置" />
+
+</form>
+</div>
+
+
+<script type="text/javascript">
+	
+
+	$.fn.serializeObject = function()    
+	{    
+	   var o = {};    
+	   var a = this.serializeArray();    
+	   $.each(a, function() {    
+	       if (o[this.name]) {    
+	           if (!o[this.name].push) {    
+	               o[this.name] = [o[this.name]];    
+	           }    
+	           o[this.name].push(this.value || '');    
+	       } else {    
+	           o[this.name] = this.value || '';    
+	       }    
+	   });    
+	   return o;    
+	};
+	
+	var form = document.forms["login"];
+	form.onsubmit = function(e){
+	    e.preventDefault();
+	    var data = $('#login').serializeObject();  
+        alert(JSON.stringify(data));  
+		$.ajax({
+		    cache: true,
+		    type: "POST",
+		    url: '/login.do',//提交的URL
+		    data: JSON.stringify(data), // 要提交的表单,必须使用name属性
+		    async: true,
+		    dataType:'json' ,
+			headers:{
+				Accept:"application/json",
+				"Content-Type":"application/json"
+			},
+		    success: function (data) {
+		        alert("success")
+		        window.location.href="/index";
+		    },
+		    error: function (request) {
+		        alert("Connection error");
+		    }
+		});
+	}
+
+	 function GetXmlHttpObject(){
+		try{
+			return new XMLHttpRequest();
+		}catch(e){
+			try{
+				return new ActiveXObject("Msxml2.XMLHTTP");
+			}catch(e){
+				return "you need a new browser";	
+			}
+		}
+	}
+       /* var form = document.forms["register"];
+        form.onsubmit = function(e){
+            e.preventDefault();
+          	//var data = $("#register").serializeArray(); //自动将form表单封装成json  
+            //alert(JSON.stringify(data));  
+            var data = $('#register').serializeObject();  
+           	//alert(JSON.stringify(jsonuserinfo));  
+            var requestObj = new GetXmlHttpObject();
+            var url = "/adduser";
+            requestObj.open("POST", url, true);
+            requestObj.setRequestHeader("content-type", "application/json");
+            requestObj.send(JSON.stringify(data));
+            //alert(JSON.stringify(data));
+            requestObj.onreadystatechange = function() {
+                if(requestObj.readyState == 4){
+                    if(requestObj.status == 200){
+                        alert(requestObj.responseText);
+                    }else{
+                        alert(requestObj.statusText);
+                    }
+                }
+            }
+        }*/
+</script>
+
+</body>
+</html>
